@@ -14,10 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = InvoiceEntity.TABLE_NAME)
 public class InvoiceEntity {
 
+    public static final String SEQ_NAME = "invoice_id_seq";
+    public static final String TABLE_NAME = "invoices";
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = InvoiceEntity.SEQ_NAME)
+    @SequenceGenerator(name = InvoiceEntity.SEQ_NAME, sequenceName = InvoiceEntity.SEQ_NAME, allocationSize = 1)
     private Long id;
 
     @OneToOne

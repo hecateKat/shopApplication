@@ -14,10 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = BasketEntity.TABLE_NAME)
 public class BasketEntity {
 
+    public static final String SEQ_NAME = "basket_id_seq";
+    public static final String TABLE_NAME = "baskets";
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = BasketEntity.SEQ_NAME)
+    @SequenceGenerator(name = BasketEntity.SEQ_NAME, sequenceName = BasketEntity.SEQ_NAME, allocationSize = 1)
     private Long id;
 
     @OneToMany
