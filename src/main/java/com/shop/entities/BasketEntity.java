@@ -30,6 +30,6 @@ public class BasketEntity {
 
     private FastMoney value;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private ClientEntity client;
 }
