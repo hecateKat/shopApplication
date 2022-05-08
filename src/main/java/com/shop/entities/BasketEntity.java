@@ -7,9 +7,11 @@ import lombok.Setter;
 import org.javamoney.moneta.FastMoney;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
-@Entity
+@Entity(name = "Basket")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,8 +30,21 @@ public class BasketEntity {
     @OneToMany
     private List<ProductEntity> products;
 
-    private FastMoney value;
+    private BigDecimal value;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private ClientEntity client;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BasketEntity that = (BasketEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(products, that.products) && Objects.equals(value, that.value) && Objects.equals(client, that.client);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, products, value, client);
+    }
 }

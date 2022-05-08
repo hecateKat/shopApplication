@@ -9,10 +9,12 @@ import org.javamoney.moneta.FastMoney;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -32,12 +34,24 @@ public class ProductEntity {
 
     private String description;
 
-    private FastMoney price;
+    private BigDecimal price;
 
-    @OneToMany
+    @ManyToMany
     private Set<Tag> tags;
 
     @ManyToMany(mappedBy = "products")
     private List<InvoiceEntity> invoices;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductEntity that = (ProductEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(price, that.price) && Objects.equals(tags, that.tags) && Objects.equals(invoices, that.invoices);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, tags, invoices);
+    }
 }

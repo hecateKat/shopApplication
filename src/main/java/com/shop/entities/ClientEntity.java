@@ -8,9 +8,10 @@ import org.hibernate.validator.constraints.pl.NIP;
 import org.hibernate.validator.constraints.pl.REGON;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Client")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -38,4 +39,17 @@ public class ClientEntity {
 
     @OneToMany(mappedBy = "client")
     private Set<BasketEntity> baskets;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientEntity that = (ClientEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(nip, that.nip) && Objects.equals(regon, that.regon) && Objects.equals(baskets, that.baskets);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, nip, regon, baskets);
+    }
 }

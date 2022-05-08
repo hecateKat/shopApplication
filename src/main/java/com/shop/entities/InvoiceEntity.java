@@ -8,8 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
-@Entity
+@Entity(name = "Invoice")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -41,4 +42,17 @@ public class InvoiceEntity {
 
     @ManyToMany
     private List<ProductEntity> products;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InvoiceEntity that = (InvoiceEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(basket, that.basket) && Objects.equals(client, that.client) && Objects.equals(invoiceNumber, that.invoiceNumber) && Objects.equals(sellingDate, that.sellingDate) && Objects.equals(paymentDate, that.paymentDate) && Objects.equals(printDate, that.printDate) && Objects.equals(products, that.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, basket, client, invoiceNumber, sellingDate, paymentDate, printDate, products);
+    }
 }
